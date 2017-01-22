@@ -15,9 +15,10 @@ def index(request):
 
 
 def edit(request, course_id):
+	getcourses = models.Course.objects.get(id=course_id)
 	context = {
 		'id': course_id,
-		'courses': getcourses,
+		'course': getcourses,
 	}
 	return render(request, "courseapp/edit.html", context)
 
@@ -25,7 +26,7 @@ def edit(request, course_id):
 def add(request):
 	course_name = request.POST['course_name']
 	course_description = request.POST['course_description']
-	models.Course.objects.create(name=course_name,description=course_description)
+	models.Course.objects.create(name=course_name, description=course_description)
 	print course_name
 	print course_description
 
@@ -34,5 +35,7 @@ def add(request):
 
 
 def delete(request, course_id):
+	getcourses = models.Course.objects.get(id=course_id)
+	getcourses.delete()
 	# process the form here
 	return redirect('/')
